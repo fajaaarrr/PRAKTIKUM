@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Validasi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="formulir">
+        <h2>Formulir Pendaftaran</h2>
+
+        <div class="error" id="errorMsg"></div>
+
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="nama@domain.com">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Minimal 8 karakter">
+
+        <button type="submit">Kirim</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('formulir');
+        const errorMsg = document.getElementById('errorMsg');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // mencegah form dikirim langsung
+
+            // Ambil nilai input
+            const nama = document.getElementById('nama').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Validasi form
+            if (nama === "" || email === "" || password === "") {
+                errorMsg.textContent = "Semua kolom harus diisi!";
+                return;
+            }
+
+            // Validasi format email (regex sederhana)
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!email.match(emailPattern)) {
+                errorMsg.textContent = "Format email tidak valid!";
+                return;
+            }
+
+            // Validasi panjang password
+            if (password.length < 8) {
+                errorMsg.textContent = "Password harus memiliki minimal 8 karakter!";
+                return;
+            }
+
+            // Jika semua valid
+            errorMsg.style.color = "green";
+            errorMsg.textContent = "Formulir berhasil dikirim!";
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>
